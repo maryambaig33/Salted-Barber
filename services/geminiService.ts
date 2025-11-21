@@ -1,13 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.API_KEY || '';
-const ai = new GoogleGenAI({ apiKey });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getStyleAdvice = async (userQuery: string): Promise<string> => {
-  if (!apiKey) {
-    return "I'm currently offline (API Key missing). However, I'd recommend a classic crew cut or a textured crop for most face shapes! Visit us in person for a professional consultation.";
-  }
-
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -26,6 +21,6 @@ export const getStyleAdvice = async (userQuery: string): Promise<string> => {
     return response.text || "I'm contemplating the perfect style for you... try asking again.";
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "I'm having trouble connecting to the styling styling database right now. Come in for a free in-person consultation!";
+    return "I'm having trouble connecting to the styling database right now. Come in for a free in-person consultation!";
   }
 };
